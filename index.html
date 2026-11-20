@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dashboard De Binnenplaats</title>
+<style>
+:root {
+  color-scheme: light;
+  --bg: #f6f5f2;
+  --surface: #fcfcfb;
+  --border: #e4e2dc;
+  --text: #0b0b0b;
+  --text-2: #52514e;
+  --muted: #8a8984;
+  --grid: #ebe9e4;
+  --s1: #2a78d6;
+  --s2: #eb6834;
+  --neutral: #c9c7c0;
+  --accent-bg: #eef4fc;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #121211;
+    --surface: #1a1a19;
+    --border: #2e2e2b;
+    --text: #f0efec;
+    --text-2: #c3c2b7;
+    --muted: #8f8e88;
+    --grid: #2a2a27;
+    --s1: #3987e5;
+    --s2: #d95926;
+    --neutral: #55544f;
+    --accent-bg: #1c2a3c;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #121211; --surface: #1a1a19; --border: #2e2e2b; --text: #f0efec;
+  --text-2: #c3c2b7; --muted: #8f8e88; --grid: #2a2a27; --s1: #3987e5;
+  --s2: #d95926; --neutral: #55544f; --accent-bg: #1c2a3c;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+main { max-width: 1040px; margin: 0 auto; padding: 32px 16px 48px; }
+header h1 { font-size: 1.6rem; margin: 0 0 4px; letter-spacing: -0.01em; }
+header p { margin: 0; color: var(--text-2); }
+.kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 28px 0 32px; }
+.kpi { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; }
+.kpi .label { color: var(--text-2); font-size: .9rem; }
+.kpi .value { font-size: 1.75rem; font-weight: 650; margin: 2px 0; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+.kpi .sub { color: var(--muted); font-size: .85rem; }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px 20px 16px; margin-bottom: 20px; }
+.card h2 { font-size: 1.15rem; margin: 0 0 2px; }
+.card .intro { color: var(--text-2); margin: 0 0 12px; font-size: .95rem; }
+.legend { display: flex; gap: 18px; flex-wrap: wrap; font-size: .875rem; color: var(--text-2); margin-bottom: 4px; }
+.legend span::before { content: ""; display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; background: var(--c); }
+.chart { position: relative; width: 100%; }
+.chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+.chart text { fill: var(--text-2); font-size: 12px; font-family: inherit; }
+.chart .val { fill: var(--text); font-weight: 600; }
+.action { margin: 12px 0 0; padding: 12px 14px; background: var(--accent-bg); border-radius: 8px; font-size: .95rem; }
+.action strong { font-weight: 650; }
+details { margin-top: 10px; font-size: .875rem; color: var(--text-2); }
+summary { cursor: pointer; }
+table { border-collapse: collapse; width: 100%; margin-top: 8px; font-variant-numeric: tabular-nums; }
+th, td { text-align: left; padding: 4px 8px; border-bottom: 1px solid var(--border); }
+td.n, th.n { text-align: right; }
+.tip { position: absolute; pointer-events: none; background: var(--text); color: var(--surface); padding: 6px 10px; border-radius: 6px; font-size: .8rem; line-height: 1.35; white-space: nowrap; opacity: 0; transition: opacity .1s; z-index: 2; }
+.tip.on { opacity: 1; }
+footer { color: var(--muted); font-size: .85rem; margin-top: 28px; }
+@media (max-width: 760px) {
+  .kpis { grid-template-columns: repeat(2, 1fr); }
+  .kpi .value { font-size: 1.4rem; }
+  header h1 { font-size: 1.35rem; }
+}
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Café De Binnenplaats</h1>
+    <p>Jaaroverzicht 1 oktober 2025 – 30 september 2026 · oefendata</p>
+  </header>
+
+  <section class="kpis" aria-label="Kerncijfers">
+    <div class="kpi"><div class="label">Omzet</div><div class="value">€ 1.156.831</div><div class="sub">incl. btw, zonder fooi</div></div>
+    <div class="kpi"><div class="label">Aantal bonnen</div><div class="value">35.246</div><div class="sub">bonnen met omzet</div></div>
+    <div class="kpi"><div class="label">Gemiddelde bon</div><div class="value">€ 32,82</div><div class="sub">incl. btw</div></div>
+    <div class="kpi"><div class="label">Brutomarge</div><div class="value">€ 712.686</div><div class="sub">68,5% · na btw en inkoop</div></div>
+  </section>
+
+  <section class="card">
+    <h2>1. Events in De Koepel zijn onze beste dagen</h2>
+    <p class="intro">Omzet op een eventzaterdag tegenover een gewone zaterdag in dezelfde maand.</p>
+    <div class="legend"><span style="--c:var(--neutral)">Gewone zaterdag</span><span style="--c:var(--s1)">Eventdag</span></div>
+    <div class="chart" id="c1"></div>
+    <p class="action"><strong>Wat te doen:</strong> vraag de eventagenda van De Koepel op en plan voor elk event extra personeel en voorraad; samen leverden de 5 events zo'n € 13.400 extra op.</p>
+    <details><summary>Bekijk als tabel</summary><table id="t1"></table></details>
+  </section>
+
+  <section class="card">
+    <h2>2. De lunch is de motor van de zaak</h2>
+    <p class="intro">Omzet per dagdeel over het hele jaar, incl. btw.</p>
+    <div class="chart" id="c2"></div>
+    <p class="action"><strong>Wat te doen:</strong> bewaak de snelheid en kwaliteit van de lunch tussen 11 en 15 uur, want daar komt ruim een derde (37%) van alle omzet vandaan.</p>
+    <details><summary>Bekijk als tabel</summary><table id="t2"></table></details>
+  </section>
+
+  <section class="card">
+    <h2>3. Maandag en dinsdag: 's avonds gebeurt er niets</h2>
+    <p class="intro">Gemiddelde omzet per uur op een open dag, incl. btw.</p>
+    <div class="legend"><span style="--c:var(--s2)">Maandag en dinsdag</span><span style="--c:var(--s1)">Woensdag en donderdag</span></div>
+    <div class="chart" id="c3"></div>
+    <p class="action"><strong>Wat te doen:</strong> ga na of de zaak op maandag en dinsdag na 19:00 echt open is en wat dat aan personeel kost, en overweeg op die dagen om 19:00 te sluiten.</p>
+    <details><summary>Bekijk als tabel</summary><table id="t3"></table></details>
+  </section>
+
+  <footer>Bron: kassadata, productkaart en weerbestand (verzonnen oefendata). Brutomarge is de omzet zonder btw min de inkoop volgens de productkaart; personeel, huur en energie zijn er nog niet vanaf.</footer>
+</main>
+
+<script>
+const eur = v => "€ " + Math.round(v).toLocaleString("nl-NL");
+const NS = "http://www.w3.org/2000/svg";
+function el(tag, attrs, parent, text) {
+  const e = document.createElementNS(NS, tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  if (text !== undefined) e.textContent = text;
+  if (parent) parent.appendChild(e);
+  return e;
+}
+function tipFor(box) {
+  const t = document.createElement("div"); t.className = "tip"; box.appendChild(t);
+  return {
+    show(html, x, y) {
+      t.innerHTML = html; t.classList.add("on");
+      const bw = box.clientWidth, tw = t.offsetWidth;
+      t.style.left = Math.max(0, Math.min(bw - tw, x - tw / 2)) + "px";
+      t.style.top = (y - t.offsetHeight - 10) + "px";
+    },
+    hide() { t.classList.remove("on"); }
+  };
+}
+function niceMax(v) { const p = Math.pow(10, Math.floor(Math.log10(v))); return Math.ceil(v / p) * p; }
+// rounded-top bar anchored to baseline
+function barPath(x, y, w, h, r) {
+  r = Math.min(r, w / 2, h);
+  return `M${x},${y + h}V${y + r}Q${x},${y} ${x + r},${y}H${x + w - r}Q${x + w},${y} ${x + w},${y + r}V${y + h}Z`;
+}
+function axisY(svg, m, W, H, max, steps, fmt) {
+  for (let i = 0; i <= steps; i++) {
+    const v = max * i / steps, y = m.t + H - H * v / max;
+    el("line", { x1: m.l, x2: m.l + W, y1: y, y2: y, stroke: "var(--grid)", "stroke-width": 1 }, svg);
+    el("text", { x: m.l - 8, y: y + 4, "text-anchor": "end" }, svg, fmt(v));
+  }
+}
+function table(id, head, rows) {
+  const t = document.getElementById(id);
+  t.innerHTML = "<tr>" + head.map((h, i) => `<th class="${i ? "n" : ""}">${h}</th>`).join("") + "</tr>" +
+    rows.map(r => "<tr>" + r.map((c, i) => `<td class="${i ? "n" : ""}">${c}</td>`).join("") + "</tr>").join("");
+}
+
+/* ---------- 1. events ---------- */
+const events = [
+  { naam: "Winterfair", datum: "29 nov", gewoon: 4182, event: 5528 },
+  { naam: "Kerstmarkt", datum: "13 dec", gewoon: 4590, event: 7658 },
+  { naam: "Open dag", datum: "14 mrt", gewoon: 4694, event: 7187 },
+  { naam: "Koepelfestival", kort: "Festival", datum: "23 mei", gewoon: 4606, event: 7531 },
+  { naam: "Monumentendag", kort: "Monumenten", datum: "19 sep", gewoon: 4734, event: 8327 }
+];
+function drawEvents() {
+  const box = document.getElementById("c1"); box.innerHTML = "";
+  const narrow = box.clientWidth < 560;
+  const VW = Math.max(320, box.clientWidth), VH = narrow ? 280 : 300;
+  const m = { t: 24, r: 8, b: 44, l: 52 }, W = VW - m.l - m.r, H = VH - m.t - m.b;
+  const svg = el("svg", { viewBox: `0 0 ${VW} ${VH}`, role: "img", "aria-label": "Staafdiagram: omzet op eventdagen tegenover gewone zaterdagen" }, box);
+  const max = 9000; axisY(svg, m, W, H, max, 3, v => v ? (v / 1000) + "k" : "€ 0");
+  const tip = tipFor(box), gw = W / events.length, bw = Math.min(28, (gw - 16) / 2);
+  events.forEach((d, i) => {
+    const cx = m.l + gw * i + gw / 2;
+    [["gewoon", "var(--neutral)", cx - bw - 1], ["event", "var(--s1)", cx + 1]].forEach(([k, c, x]) => {
+      const h = H * d[k] / max, y = m.t + H - h;
+      el("path", { d: barPath(x, y, bw, h, 4), fill: c }, svg);
+    });
+    el("text", { x: cx + 1 + bw / 2, y: m.t + H - H * d.event / max - 6, "text-anchor": "middle", class: "val" }, svg, "+" + Math.round((d.event / d.gewoon - 1) * 100) + "%");
+    el("text", { x: cx, y: m.t + H + 18, "text-anchor": "middle" }, svg, narrow && d.kort ? d.kort : d.naam);
+    el("text", { x: cx, y: m.t + H + 34, "text-anchor": "middle", fill: "var(--muted)" }, svg, d.datum);
+    const hit = el("rect", { x: m.l + gw * i, y: m.t, width: gw, height: H, fill: "transparent" }, svg);
+    hit.addEventListener("pointerenter", () => tip.show(`<b>${d.naam}</b> (za ${d.datum})<br>Eventdag: ${eur(d.event)}<br>Gewone zaterdag: ${eur(d.gewoon)}<br>Extra: ${eur(d.event - d.gewoon)}`, cx * box.clientWidth / VW, (m.t + H - H * d.event / max) * box.clientWidth / VW));
+    hit.addEventListener("pointerleave", tip.hide);
+  });
+}
+table("t1", ["Event (zaterdag)", "Gewone zaterdag", "Eventdag", "Extra"], events.map(d => [`${d.naam}, ${d.datum}`, eur(d.gewoon), eur(d.event), "+ " + eur(d.event - d.gewoon).slice(2)]));
+
+/* ---------- 2. dagdelen ---------- */
+const dagdelen = [
+  { naam: "Ochtend", omzet: 99318 }, { naam: "Lunch", omzet: 425972 }, { naam: "Middag", omzet: 110084 },
+  { naam: "Borrel", omzet: 248926 }, { naam: "Diner", omzet: 272531 }
+];
+const totDag = dagdelen.reduce((s, d) => s + d.omzet, 0);
+function drawDagdelen() {
+  const box = document.getElementById("c2"); box.innerHTML = "";
+  const VW = Math.max(320, box.clientWidth), VH = 270;
+  const m = { t: 26, r: 8, b: 30, l: 52 }, W = VW - m.l - m.r, H = VH - m.t - m.b;
+  const svg = el("svg", { viewBox: `0 0 ${VW} ${VH}`, role: "img", "aria-label": "Staafdiagram: omzet per dagdeel, lunch is het grootst" }, box);
+  const max = 450000; axisY(svg, m, W, H, max, 3, v => v ? (v / 1000) + "k" : "€ 0");
+  const tip = tipFor(box), gw = W / dagdelen.length, bw = Math.min(56, gw - 18);
+  dagdelen.forEach((d, i) => {
+    const cx = m.l + gw * i + gw / 2, h = H * d.omzet / max, y = m.t + H - h;
+    el("path", { d: barPath(cx - bw / 2, y, bw, h, 4), fill: d.naam === "Lunch" ? "var(--s1)" : "var(--neutral)" }, svg);
+    el("text", { x: cx, y: y - 7, "text-anchor": "middle", class: "val" }, svg, Math.round(d.omzet / totDag * 100) + "%");
+    el("text", { x: cx, y: m.t + H + 18, "text-anchor": "middle" }, svg, d.naam);
+    const hit = el("rect", { x: m.l + gw * i, y: m.t, width: gw, height: H, fill: "transparent" }, svg);
+    hit.addEventListener("pointerenter", () => tip.show(`<b>${d.naam}</b><br>${eur(d.omzet)} · ${(d.omzet / totDag * 100).toFixed(1).replace(".", ",")}% van de omzet`, cx * box.clientWidth / VW, y * box.clientWidth / VW));
+    hit.addEventListener("pointerleave", tip.hide);
+  });
+}
+table("t2", ["Dagdeel", "Omzet", "Deel"], dagdelen.map(d => [d.naam, eur(d.omzet), (d.omzet / totDag * 100).toFixed(1).replace(".", ",") + "%"]));
+
+/* ---------- 3. uren ---------- */
+const uren = [8,9,10,11,12,13,14,15,16,17,18,19,20,21];
+const mad  = [69,66,76,242,233,213,223,113,107,258,263,0,0,0];
+const wodo = [79,88,80,263,279,266,271,144,140,307,529,207,218,220];
+function drawUren() {
+  const box = document.getElementById("c3"); box.innerHTML = "";
+  const narrow = box.clientWidth < 560;
+  const VW = Math.max(320, box.clientWidth), VH = 280;
+  const m = { t: 20, r: narrow ? 12 : 16, b: 30, l: 52 }, W = VW - m.l - m.r, H = VH - m.t - m.b;
+  const svg = el("svg", { viewBox: `0 0 ${VW} ${VH}`, role: "img", "aria-label": "Lijndiagram: omzet per uur, maandag en dinsdag vallen na 19 uur naar nul" }, box);
+  const max = 600; axisY(svg, m, W, H, max, 3, v => "€ " + v);
+  const x = i => m.l + W * i / (uren.length - 1), y = v => m.t + H - H * v / max;
+  // band 19-22
+  el("rect", { x: x(11), y: m.t, width: x(13) - x(11), height: H, fill: "var(--grid)", opacity: .55 }, svg);
+  el("text", { x: (x(11) + x(13)) / 2, y: m.t + 14, "text-anchor": "middle", fill: "var(--muted)" }, svg, "ma/di: € 0");
+  uren.forEach((u, i) => { if (!narrow || i % 2 === 0) el("text", { x: x(i), y: m.t + H + 18, "text-anchor": "middle" }, svg, u + ":00"); });
+  [[wodo, "var(--s1)"], [mad, "var(--s2)"]].forEach(([s, c]) => {
+    el("polyline", { points: s.map((v, i) => `${x(i)},${y(v)}`).join(" "), fill: "none", stroke: c, "stroke-width": 2, "stroke-linejoin": "round" }, svg);
+  });
+  const cross = el("line", { y1: m.t, y2: m.t + H, stroke: "var(--muted)", "stroke-width": 1, opacity: 0 }, svg);
+  const dots = [wodo, mad].map((s, k) => el("circle", { r: 4.5, fill: k ? "var(--s2)" : "var(--s1)", stroke: "var(--surface)", "stroke-width": 2, opacity: 0 }, svg));
+  const tip = tipFor(box);
+  const hit = el("rect", { x: m.l, y: m.t, width: W, height: H, fill: "transparent" }, svg);
+  const move = ev => {
+    const r = svg.getBoundingClientRect(), px = (ev.clientX - r.left) * VW / r.width;
+    const i = Math.max(0, Math.min(uren.length - 1, Math.round((px - m.l) / W * (uren.length - 1))));
+    cross.setAttribute("x1", x(i)); cross.setAttribute("x2", x(i)); cross.setAttribute("opacity", .6);
+    [wodo, mad].forEach((s, k) => { dots[k].setAttribute("cx", x(i)); dots[k].setAttribute("cy", y(s[i])); dots[k].setAttribute("opacity", 1); });
+    tip.show(`<b>${uren[i]}:00 – ${uren[i] + 1}:00</b><br>Ma/di: ${eur(mad[i])}<br>Wo/do: ${eur(wodo[i])}`, x(i) * box.clientWidth / VW, y(Math.max(mad[i], wodo[i])) * box.clientWidth / VW);
+  };
+  hit.addEventListener("pointermove", move); hit.addEventListener("pointerdown", move);
+  hit.addEventListener("pointerleave", () => { tip.hide(); cross.setAttribute("opacity", 0); dots.forEach(d => d.setAttribute("opacity", 0)); });
+}
+table("t3", ["Uur", "Ma/di", "Wo/do"], uren.map((u, i) => [`${u}:00`, eur(mad[i]), eur(wodo[i])]));
+
+function drawAll() { drawEvents(); drawDagdelen(); drawUren(); }
+drawAll();
+let rt, lastW = 0;
+new ResizeObserver(() => {
+  const w = document.getElementById("c1").clientWidth;
+  if (w === lastW) return; lastW = w;
+  clearTimeout(rt); rt = setTimeout(drawAll, 60);
+}).observe(document.querySelector("main"));
+</script>
+</body>
+</html>
